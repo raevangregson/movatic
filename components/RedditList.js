@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Navigator,ActivityIndicator, StyleSheet, Image, ListView, Text, View,TouchableOpacity} from 'react-native';
+import { ActivityIndicator, StyleSheet, Image, ListView, Text, View} from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 export default class RedditList extends Component {
 
@@ -68,6 +69,16 @@ render() {
   text: {
     marginLeft: 12,
     fontSize: 16,
+    marginRight:60,
+    alignItems: 'center',
+  },
+  upvotes: {
+    color:'green',
+    marginLeft: 12,
+    fontSize: 16,
+    marginRight:60,
+    alignItems: 'center',
+    fontSize:10,
   },
   photo: {
     height: 60,
@@ -75,37 +86,23 @@ render() {
     borderRadius: 10,
   },
 });
+
   return (
 
     <View style={styles.parentContainer}>
-
       <ListView
-
         dataSource={this.state.dataSource}
-
         renderSeparator= {this.ListViewItemSeparator}
-
-        renderRow={(rowData) =>
-          <TouchableOpacity
-                   onPress = {() => this._navigate(rowData.title)}>
-       <View style= {styles.container} >
-         <Image source={{ url: rowData.data.thumbnail}} style={styles.photo} />
-         <Text style={styles.text}>{rowData.data.title}</Text>
+        renderRow={
+          (rowData) =>
+        <View style= {styles.container} >
+          <Text style={{alignItems: 'center'}}>{rowData.data.ups}{"\n\r"}<Text style={styles.upvotes}>Upvotes</Text></Text>
+         <Text onPress={()=>Actions.postView({dataSource:rowData.data})}  style={styles.text}>{rowData.data.title}</Text>
        </View>
-</TouchableOpacity>
         }
       />
 
     </View>
   );
-}
-
-_navigate(title) {
-  this.props.navigator.push({
-    name: 'ProfileView',
-    passProps: {
-      title
-    }
-  })
 }
 }
