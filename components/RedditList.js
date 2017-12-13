@@ -55,7 +55,7 @@ render() {
   const styles = StyleSheet.create({
     parentContainer: {
       flex: 1,
-      marginTop: 25,
+      marginTop: -10,
       padding: 12,
       flexDirection: 'row',
       alignItems: 'center',
